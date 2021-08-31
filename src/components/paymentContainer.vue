@@ -1,30 +1,69 @@
 <template>
-  <div class="checkin" id="checkinContainer">
-    <button class="checkinButton" id="openMenu">open payment menu</button>
+  <div>
+    <div class="checkin" id="checkinContainer">
+      <button class="checkinButton" id="openMenu">open payment menu</button>
+    </div>
+    <div class="container" id="paymentContainer"></div>
   </div>
-  <button v-on:click="openMenu" class="submit" id="submitButton">open</button>
-  <div class="container" id="paymentContainer"></div>
 </template>
 
 <script>
 export default {
   name: "paymentContainer",
-  props: ["instrument", "checkoutVersion"],
+  props: ["instrument", "isOpen", "setting"],
+  watch: {
+    isOpen: function (newState, oldState) {
+      if (newState === true && oldState === false) this.openMenu();
+    },
+    setting: function (newState) {
+      this.updateContainer(newState);
+    },
+  },
+  data() {
+    return {
+      checkoutContainer: {
+        container: "paymentContainer",
+      },
+      paymentContainer: {
+        container: "paymentContainer",
+      },
+    };
+  },
   methods: {
     openMenu() {
-      let container = {
-        container: "paymentContainer",
-      };
-      if (this.instrument === "checkout") {
-        container = {
-          container: {
-            checkoutContainer: "paymentContainer",
-          },
-          culture: "en-US",
-        };
-      }
+      let container =
+        this.instrument === "checkout"
+          ? this.checkoutContainer
+          : this.paymentContainer;
       //eslint-disable-next-line
       payex.hostedView[this.instrument](container).open();
+    },
+    updateContainer(checkoutType) {
+      switch (checkoutType) {
+        case "Authenticated": {
+          this.checkoutContainer = {
+            container: {
+              checkoutContainer: "paymentContainer",
+            },
+          };
+          break;
+        }
+        case "standard": {
+          this.checkoutContainer = {
+            container: {
+              checkinContainer: "checkinContainer",
+              paymentMenuContainer: "paymentContainer",
+            },
+          };
+          break;
+        }
+        case "MAC": {
+          this.checkoutContainer = {
+            container: "paymentContainer",
+          };
+          break;
+        }
+      }
     },
   },
 };

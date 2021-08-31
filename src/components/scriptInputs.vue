@@ -9,21 +9,29 @@
         @input="setInstrument"
       />
       <button v-on:click="clickOpen" class="submit" id="submitButton">
-        inject script
+        open script
       </button>
     </div>
-    <checkoutOptions />
+    <checkoutOptions
+      :settings="settings"
+      @onUpdateSettings="settings = $event"
+    />
   </div>
 </template>
 
 <script>
-import checkoutOptions from './checkoutOptions.vue';
+import checkoutOptions from "./checkoutOptions.vue";
 
 export default {
   name: "scriptInputs",
   props: ["instrument"],
+  watch: {
+    settings: function (newVal) {
+      this.$emit("onSettingsUpdated", newVal);
+    },
+  },
   components: {
-    checkoutOptions
+    checkoutOptions,
   },
   data() {
     return {
@@ -32,11 +40,11 @@ export default {
   },
   methods: {
     async clickOpen() {
-        this.injectScript(this.link)
-        .then( () => {
+      this.injectScript(this.link)
+        .then(() => {
           this.$emit("onScriptAppend");
         })
-        .catch( error => {
+        .catch((error) => {
           window.alert("injection failed: " + error);
         });
     },
@@ -61,7 +69,7 @@ export default {
         let instrumentName = splitValues[3];
         if (instrumentName.includes("creditcard"))
           instrumentName = "creditCard";
-        else if(instrumentName.includes("paymentmenu"))
+        else if (instrumentName.includes("paymentmenu"))
           instrumentName = "paymentMenu";
         this.$emit("onUpdateInstrument", instrumentName);
       }

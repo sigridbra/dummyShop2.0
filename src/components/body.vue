@@ -1,12 +1,15 @@
 <template>
   <div id="body">
-    <scriptInputs 
+    <scriptInputs
       :instrument="instrument"
-      @onUpdateInstrument="instrument=$event"
-      @onScriptAppend="openMenu()"
+      @onUpdateInstrument="instrument = $event"
+      @onScriptAppend="scriptAppended()"
+      @onSettingsUpdated="updateContainer($event)"
     />
-    <paymentContainer 
-      :instrument="instrument" 
+    <paymentContainer
+      :instrument="instrument"
+      :isOpen="isOpen"
+      :setting="setting"
     />
   </div>
 </template>
@@ -18,17 +21,26 @@ import ScriptInputs from "./scriptInputs.vue";
 export default {
   name: "Body",
   data() {
-      return {
-          instrument: "no instrument",
-      }
+    return {
+      instrument: "",
+      isOpen: false,
+      setting: "",
+    };
   },
   components: {
     ScriptInputs,
     paymentContainer,
-  }
+  },
+  methods: {
+    scriptAppended() {
+      this.isOpen = true;
+    },
+    updateContainer(setting) {
+      this.setting = setting;
+    },
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>
