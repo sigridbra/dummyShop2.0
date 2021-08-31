@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="radioButtons" id="radioButtons">
-      <a>using checkout?</a><br />
+      <a>using view-checkout?</a><br />
       <input
         type="radio"
         id="MAC"
