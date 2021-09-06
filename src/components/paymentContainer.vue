@@ -1,7 +1,13 @@
 <template>
   <div>
     <div class="checkin" id="checkinContainer">
-      <button class="checkinButton" id="openMenu">open payment menu</button>
+      <button
+        :style="{ visibility: showOpenMenuButton ? 'visible' : 'hidden' }"
+        id="openMenu"
+        @click="openMenu"
+      >
+        open payment menu
+      </button>
     </div>
     <div class="container" id="paymentContainer"></div>
   </div>
@@ -13,7 +19,7 @@ export default {
   props: ["instrument", "isOpen", "setting"],
   watch: {
     isOpen: function (newState, oldState) {
-      if (newState === true && oldState === false) this.openMenu();
+      if (newState === true && oldState === false) this.openPayment();
     },
     setting: function (newState) {
       this.updateContainer(newState);
@@ -27,6 +33,7 @@ export default {
       paymentContainer: {
         container: "paymentContainer",
       },
+      showOpenMenuButton: false,
     };
   },
   methods: {
