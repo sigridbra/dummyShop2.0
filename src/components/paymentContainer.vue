@@ -37,15 +37,17 @@ export default {
     };
   },
   methods: {
-    openMenu() {
+    openPayment() {
       let container =
         this.instrument === "checkout"
           ? this.checkoutContainer
           : this.paymentContainer;
+      let setting = this.setting === "standard" ? "checkin" : null;
       //eslint-disable-next-line
-      payex.hostedView[this.instrument](container).open();
+      payex.hostedView[this.instrument](container).open(setting);
     },
     updateContainer(checkoutType) {
+      this.showOpenMenuButton = false;
       switch (checkoutType) {
         case "Authenticated": {
           this.checkoutContainer = {
@@ -56,6 +58,7 @@ export default {
           break;
         }
         case "standard": {
+          this.showOpenMenuButton = true;
           this.checkoutContainer = {
             container: {
               checkinContainer: "checkinContainer",
@@ -72,6 +75,12 @@ export default {
         }
       }
     },
+    openMenu() {
+      //eslint-disable-next-line
+      payex.hostedView[this.instrument](this.checkoutContainer).open(
+        "paymentmenu"
+      );
+    },
   },
 };
 </script>
@@ -83,9 +92,6 @@ export default {
   position: relative;
   height: auto;
   width: auto;
-}
-.checkinButton {
-  display: none;
 }
 .checkin {
   position: flex;
