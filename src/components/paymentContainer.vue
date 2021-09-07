@@ -58,11 +58,13 @@ export default {
           break;
         }
         case "standard": {
-          this.showOpenMenuButton = true;
           this.checkoutContainer = {
             container: {
               checkinContainer: "checkinContainer",
               paymentMenuContainer: "paymentContainer",
+            },
+            onShippingDetailsAvailable: () => {
+              this.showOpenMenuButton = true;
             },
           };
           break;
