@@ -1,6 +1,8 @@
 <template>
-  <div>
+  <div id="iframeContainers">
     <div class="checkin" id="checkinContainer">
+    </div>
+  <div id="showButton">
       <button
         :style="{ visibility: showOpenMenuButton ? 'visible' : 'hidden' }"
         id="openMenu"
@@ -8,7 +10,7 @@
       >
         open payment menu
       </button>
-    </div>
+  </div>
     <div class="container" id="paymentContainer"></div>
   </div>
 </template>
