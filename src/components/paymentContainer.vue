@@ -51,6 +51,7 @@ export default {
     updateContainer(checkoutType) {
       this.showOpenMenuButton = false;
       switch (checkoutType) {
+        case "MAC":
         case "Authenticated": {
           this.checkoutContainer = {
             container: {
@@ -68,12 +69,6 @@ export default {
             onShippingDetailsAvailable: () => {
               this.showOpenMenuButton = true;
             },
-          };
-          break;
-        }
-        case "MAC": {
-          this.checkoutContainer = {
-            container: "paymentContainer",
           };
           break;
         }
