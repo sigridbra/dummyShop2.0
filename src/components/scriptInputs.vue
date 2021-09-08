@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="scriptOptions">
     <div class="inputs">
       <input
         class="input"
@@ -13,6 +13,7 @@
       </button>
     </div>
     <checkoutOptions
+      :instrument="instrument"
       :settings="settings"
       @onUpdateSettings="settings = $event"
     />

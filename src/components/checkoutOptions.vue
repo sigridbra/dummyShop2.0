@@ -31,7 +31,17 @@
 <script>
 export default {
   name: "checkoutOptions",
-  props: ["settings"],
+  props: ["settings", "instrument"],
+  watch: {
+    instrument: function (newVal) {
+      this.visibility = newVal === "checkout" ? "visible" : "hidden";
+    },
+  },
+  data() {
+    return {
+      visibility: "hidden",
+    };
+  },
   methods: {
     chooseSettings(event) {
       this.$emit("onUpdateSettings", event.target.value);
@@ -42,6 +52,7 @@ export default {
 
 <style scoped>
 .radioButtons {
+  visibility: v-bind(visibility);
   float: left;
   width: auto;
   display: block;
