@@ -1,8 +1,7 @@
 <template>
   <div id="iframeContainers">
-    <div class="checkin" id="checkinContainer">
-    </div>
-  <div id="showButton">
+    <div class="checkin" id="checkinContainer"></div>
+    <div id="showButton">
       <button
         :style="{ visibility: showOpenMenuButton ? 'visible' : 'hidden' }"
         id="openMenu"
@@ -10,8 +9,12 @@
       >
         open payment menu
       </button>
-  </div>
+    </div>
     <div class="container" id="paymentContainer"></div>
+    <img
+      src="https://media2.giphy.com/media/mJHSkWKziszrkcNJPo/giphy.gif"
+      :style="{ visibility: showCompleteAlert ? 'visible' : 'hidden' }"
+    />
   </div>
 </template>
 
@@ -31,11 +34,18 @@ export default {
     return {
       checkoutContainer: {
         container: "paymentContainer",
+        onPaymentCompleted: () => {
+          this.paymentCompleted();
+        }
       },
       paymentContainer: {
         container: "paymentContainer",
+        onPaymentCompleted: () => {
+          this.paymentComplete();
+        },
       },
       showOpenMenuButton: false,
+      showCompleteAlert: false,
     };
   },
   methods: {
@@ -57,6 +67,9 @@ export default {
             container: {
               checkoutContainer: "paymentContainer",
             },
+            onPaymentPaid: () => {
+              this.paymentComplete();
+            },
           };
           break;
         }
@@ -65,6 +78,9 @@ export default {
             container: {
               checkinContainer: "checkinContainer",
               paymentMenuContainer: "paymentContainer",
+            },
+            onPaymentPaid: () => {
+              this.paymentComplete();
             },
             onShippingDetailsAvailable: () => {
               this.showOpenMenuButton = true;
@@ -79,6 +95,15 @@ export default {
       payex.hostedView[this.instrument](this.checkoutContainer).open(
         "paymentmenu"
       );
+    },
+    closePayment() {
+      //eslint-disable-next-line
+      payex.hostedView[this.instrument]().close();
+    },
+    // events
+    paymentComplete() {
+      this.closePayment();
+      this.showCompleteAlert = true;
     },
   },
 };
