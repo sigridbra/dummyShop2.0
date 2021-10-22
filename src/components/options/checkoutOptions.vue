@@ -1,5 +1,5 @@
 <template>
-  <div class="radioButtons" id="radioButtons">
+  <div v-if="visibility" class="radioButtons" id="radioButtons">
     <a>using view-checkout?</a><br />
     <input
       type="radio"
@@ -34,12 +34,12 @@ export default {
   props: ["settings", "instrument"],
   watch: {
     instrument: function (newVal) {
-      this.visibility = newVal === "checkout" ? "visible" : "hidden";
+      this.visibility = newVal === "checkout" ? true : false;
     },
   },
   data() {
     return {
-      visibility: "hidden",
+      visibility: false,
     };
   },
   methods: {
@@ -52,7 +52,6 @@ export default {
 
 <style scoped>
 .radioButtons {
-  visibility: v-bind(visibility);
   float: left;
   width: auto;
   display: block;
