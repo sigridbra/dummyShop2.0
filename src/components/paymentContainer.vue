@@ -90,7 +90,6 @@ export default {
       } else {
         if (this.container[eventName]) delete this.container[eventName];
       }
-      console.log(this.container);
     },
     //Events
     onPaymentCompleted() {
