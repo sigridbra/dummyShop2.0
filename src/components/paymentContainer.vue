@@ -30,7 +30,7 @@ export default {
       this.updateContainerName(newState);
     },
     eventOptions: function (newState) {
-      console.log(newState);
+      this.updateEvent(newState)
     }
   },
   data() {
@@ -80,6 +80,11 @@ export default {
     closePayment() {
       //eslint-disable-next-line
       payex.hostedView[this.instrument]().close();
+    },
+    updateEvent(event) {
+      let eventName = Object.getOwnPropertyNames(event);
+      let eventEnabled = event[eventName];
+      console.log(eventEnabled);
     },
     // events
     paymentComplete() {
