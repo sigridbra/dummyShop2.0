@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import checkoutOptions from "./checkoutOptions.vue";
+import checkoutOptions from "./options/checkoutOptions.vue";
 
 export default {
   name: "scriptInputs",
