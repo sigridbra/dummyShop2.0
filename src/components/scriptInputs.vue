@@ -37,6 +37,7 @@ export default {
   data() {
     return {
       settings: "",
+      link: ""
     };
   },
   methods: {
