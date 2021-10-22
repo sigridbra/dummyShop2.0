@@ -21,27 +21,24 @@
 <script>
 export default {
   name: "paymentContainer",
-  props: ["instrument", "isOpen", "setting"],
+  props: ["instrument", "isOpen", "setting", "eventOptions"],
   watch: {
     isOpen: function (newState, oldState) {
       if (newState === true && oldState === false) this.openPayment();
     },
     setting: function (newState) {
-      this.updateContainer(newState);
+      this.updateContainerName(newState);
+    },
+    eventOptions: function (newState) {
+      this.updateEvent(newState);
     },
   },
   data() {
     return {
-      checkoutContainer: {
+      container: {
         container: "paymentContainer",
         onPaymentCompleted: () => {
           this.paymentCompleted();
-        }
-      },
-      paymentContainer: {
-        container: "paymentContainer",
-        onPaymentCompleted: () => {
-          this.paymentComplete();
         },
       },
       showOpenMenuButton: false,
@@ -49,61 +46,90 @@ export default {
     };
   },
   methods: {
+    closePayment() {
+      //eslint-disable-next-line
+      payex.hostedView[this.instrument]().close();
+    },
     openPayment() {
-      let container =
-        this.instrument === "checkout"
-          ? this.checkoutContainer
-          : this.paymentContainer;
+      let container = this.container;
       let setting = this.setting === "standard" ? "checkin" : null;
       //eslint-disable-next-line
       payex.hostedView[this.instrument](container).open(setting);
     },
-    updateContainer(checkoutType) {
+    openMenu() {
+      //eslint-disable-next-line
+      payex.hostedView[this.instrument](this.container).open("paymentmenu");
+    },
+    updateContainerName(checkoutType) {
       this.showOpenMenuButton = false;
       switch (checkoutType) {
         case "MAC":
         case "Authenticated": {
-          this.checkoutContainer = {
-            container: {
-              checkoutContainer: "paymentContainer",
-            },
-            onPaymentPaid: () => {
-              this.paymentComplete();
-            },
+          this.container.container = {
+            checkoutContainer: "paymentContainer",
           };
           break;
         }
         case "standard": {
-          this.checkoutContainer = {
-            container: {
-              checkinContainer: "checkinContainer",
-              paymentMenuContainer: "paymentContainer",
-            },
-            onPaymentPaid: () => {
-              this.paymentComplete();
-            },
-            onShippingDetailsAvailable: () => {
-              this.showOpenMenuButton = true;
-            },
+          this.container.container = {
+            checkinContainer: "checkinContainer",
+            paymentMenuContainer: "paymentContainer",
           };
           break;
         }
       }
     },
-    openMenu() {
-      //eslint-disable-next-line
-      payex.hostedView[this.instrument](this.checkoutContainer).open(
-        "paymentmenu"
-      );
+    updateEvent(event) {
+      let eventName = Object.getOwnPropertyNames(event);
+      let eventEnabled = event[eventName];
+      if (eventEnabled) {
+        let event = {
+          [eventName]: this[eventName],
+        };
+        this.container = Object.assign(this.container, event);
+      } else {
+        if (this.container[eventName]) delete this.container[eventName];
+      }
     },
-    closePayment() {
-      //eslint-disable-next-line
-      payex.hostedView[this.instrument]().close();
+    //Events
+    onPaymentCompleted() {
+      window.alert("Triggered event " + "onPaymentCompleted");
     },
-    // events
-    paymentComplete() {
-      this.closePayment();
-      this.showCompleteAlert = true;
+    onPaymentPaid() {
+      window.alert("Triggered event " + "onPaymentPaid");
+    },
+    onEventNotification() {
+      window.alert("Triggered event " + "onEventNotification");
+    },
+    onInstrumentSelected() {
+      window.alert("Triggered event " + "onInstrumentSelected");
+    },
+    onExternalRedirect() {
+      window.alert("Triggered event " + "onExternalRedirect");
+    },
+    onError() {
+      window.alert("Triggered event " + "onError");
+    },
+    onTermsOfServiceRequested() {
+      window.alert("Triggered event " + "onTermsOfServiceRequested");
+    },
+    onOutOfViewRedirect() {
+      window.alert("Triggered event " + "onOutOfViewRedirect");
+    },
+    OnApllicationConfigured() {
+      window.alert("Triggered event " + "OnApllicationConfigured");
+    },
+    onPaymentAborted() {
+      window.alert("Triggered event " + "onPaymentAborted");
+    },
+    onPaymentFailed() {
+      window.alert("Triggered event " + "onPaymentFailed");
+    },
+    ExternalOpen() {
+      window.alert("Triggered event " + "ExternalOpen");
+    },
+    onOutOfViewOpen() {
+      window.alert("Triggered event " + "onOutOfViewOpen");
     },
   },
 };

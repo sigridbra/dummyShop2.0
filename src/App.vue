@@ -1,17 +1,17 @@
 <template>
-  <Header />
-  <Body />
+  <TheNavBar />
+  <TheBody />
 </template>
 
 <script>
-import Header from "./components/header.vue";
-import Body from "./components/body.vue";
+import TheNavBar from "./components/TheNavBar.vue";
+import TheBody from "./components/Thebody.vue";
 
 export default {
   name: "App",
   components: {
-    Header,
-    Body,
+    TheNavBar,
+    TheBody,
   },
 };
 </script>
@@ -49,5 +49,13 @@ button {
 input {
   border-color: #00ffff;
   background-color: white;
+}
+.flexbox {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 5px;
+  gap: 10px;
 }
 </style>
