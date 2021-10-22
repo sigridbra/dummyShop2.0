@@ -27,7 +27,7 @@ export default {
       if (newState === true && oldState === false) this.openPayment();
     },
     setting: function (newState) {
-      this.updateContainer(newState);
+      this.updateContainerName(newState);
     },
     eventOptions: function (newState) {
       console.log(newState);
