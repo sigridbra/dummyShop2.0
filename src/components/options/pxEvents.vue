@@ -1,16 +1,19 @@
 <template>
-<button class="openEventMenu" @click="showEventOptions">events</button>
+  <button class="openEventMenu" @click="showEventOptions">events</button>
   <div v-if="showEvents" id="pxEventHandler" class="pxEventHandler">
     <div class="fullForm" v-for="(value, key, index) in events" :key="index">
       <label :for="key">
-        <input type="checkbox" :id="key" v-model="events[key]" />
+        <input
+          type="checkbox"
+          :id="key"
+          v-model="events[key]"
+          @click="updateEvent(key)"
+        />
         {{ key }}
       </label>
     </div>
-    <button @click="submitEvents">submit</button>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -37,17 +40,15 @@ export default {
     };
   },
   methods: {
-      showEventOptions() {
-          this.showEvents = this.showEvents  ? false : true;
-      },
-      submitEvents() {
-          this.showEvents = false;
-          this.$emit("onEventsUpdated", this.events)
-      }
-  }
+    showEventOptions() {
+      this.showEvents = this.showEvents ? false : true;
+    },
+    updateEvent(eventName) {
+      this.$emit("onEventsUpdated", { [eventName]: !this.events[eventName] });
+    },
+  },
 };
 </script>
-
 
 <style scoped>
 .pxEventHandler {
@@ -73,7 +74,7 @@ input {
   display: flex;
 }
 .openEventMenu {
-    float: left;
+  float: left;
 }
 modal {
   width: auto;
