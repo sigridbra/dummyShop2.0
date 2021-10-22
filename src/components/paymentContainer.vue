@@ -21,7 +21,7 @@
 <script>
 export default {
   name: "paymentContainer",
-  props: ["instrument", "isOpen", "setting"],
+  props: ["instrument", "isOpen", "setting", "eventOptions"],
   watch: {
     isOpen: function (newState, oldState) {
       if (newState === true && oldState === false) this.openPayment();
@@ -29,6 +29,9 @@ export default {
     setting: function (newState) {
       this.updateContainer(newState);
     },
+    eventOptions: function (newState) {
+      console.log(newState);
+    }
   },
   data() {
     return {
@@ -45,7 +48,7 @@ export default {
         },
       },
       showOpenMenuButton: false,
-      showCompleteAlert: false,
+      showCompleteAlert: false
     };
   },
   methods: {
