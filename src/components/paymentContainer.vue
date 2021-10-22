@@ -30,8 +30,8 @@ export default {
       this.updateContainerName(newState);
     },
     eventOptions: function (newState) {
-      this.updateEvent(newState)
-    }
+      this.updateEvent(newState);
+    },
   },
   data() {
     return {
@@ -39,18 +39,26 @@ export default {
         container: "paymentContainer",
         onPaymentCompleted: () => {
           this.paymentCompleted();
-        }
+        },
       },
       showOpenMenuButton: false,
-      showCompleteAlert: false
+      showCompleteAlert: false,
     };
   },
   methods: {
+    closePayment() {
+      //eslint-disable-next-line
+      payex.hostedView[this.instrument]().close();
+    },
     openPayment() {
       let container = this.container;
       let setting = this.setting === "standard" ? "checkin" : null;
       //eslint-disable-next-line
       payex.hostedView[this.instrument](container).open(setting);
+    },
+    openMenu() {
+      //eslint-disable-next-line
+      payex.hostedView[this.instrument](this.container).open("paymentmenu");
     },
     updateContainerName(checkoutType) {
       this.showOpenMenuButton = false;
@@ -58,32 +66,32 @@ export default {
         case "MAC":
         case "Authenticated": {
           this.container.container = {
-              checkoutContainer: "paymentContainer",
+            checkoutContainer: "paymentContainer",
           };
           break;
         }
         case "standard": {
           this.container.container = {
-              checkinContainer: "checkinContainer",
-              paymentMenuContainer: "paymentContainer",
-            }
+            checkinContainer: "checkinContainer",
+            paymentMenuContainer: "paymentContainer",
+          };
           break;
         }
       }
     },
-    openMenu() {
-      //eslint-disable-next-line
-      payex.hostedView[this.instrument](this.container).open(
-        "paymentmenu"
-      );
-    },
-    closePayment() {
-      //eslint-disable-next-line
-      payex.hostedView[this.instrument]().close();
-    },
     updateEvent(event) {
       let eventName = Object.getOwnPropertyNames(event);
       let eventEnabled = event[eventName];
+      if (eventEnabled) {
+        let event = {
+          [eventName]: this[eventName],
+        };
+        this.container = Object.assign(this.container, event);
+      } else {
+        if (this.container[eventName]) delete this.container[eventName];
+      }
+      console.log(this.container);
+    },
     //Events
     onPaymentCompleted() {
       window.alert("Triggered event " + "onPaymentCompleted");
