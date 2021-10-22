@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       settings: "",
-      link: ""
+      link: "",
     };
   },
   methods: {
