@@ -73,7 +73,7 @@ export default {
     },
     openMenu() {
       //eslint-disable-next-line
-      payex.hostedView[this.instrument](this.checkoutContainer).open(
+      payex.hostedView[this.instrument](this.container).open(
         "paymentmenu"
       );
     },
