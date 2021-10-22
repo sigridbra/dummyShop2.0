@@ -50,4 +50,12 @@ input {
   border-color: #00ffff;
   background-color: white;
 }
+.flexbox {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 5px;
+  gap: 10px;
+}
 </style>
