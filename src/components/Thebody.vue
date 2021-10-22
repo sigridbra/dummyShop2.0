@@ -19,7 +19,7 @@ import paymentContainer from "./paymentContainer.vue";
 import ScriptInputs from "./scriptInputs.vue";
 
 export default {
-  name: "Body",
+  name: "TheBody",
   data() {
     return {
       instrument: "",

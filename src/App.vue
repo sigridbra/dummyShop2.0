@@ -1,17 +1,17 @@
 <template>
-  <Header />
-  <Body />
+  <TheNavBar />
+  <TheBody />
 </template>
 
 <script>
-import Header from "./components/header.vue";
-import Body from "./components/body.vue";
+import TheNavBar from "./components/TheNavBar.vue";
+import TheBody from "./components/Thebody.vue";
 
 export default {
   name: "App",
   components: {
-    Header,
-    Body,
+    TheNavBar,
+    TheBody,
   },
 };
 </script>
