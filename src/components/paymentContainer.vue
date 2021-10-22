@@ -47,42 +47,26 @@ export default {
   },
   methods: {
     openPayment() {
-      let container =
-        this.instrument === "checkout"
-          ? this.checkoutContainer
-          : this.paymentContainer;
+      let container = this.container;
       let setting = this.setting === "standard" ? "checkin" : null;
       //eslint-disable-next-line
       payex.hostedView[this.instrument](container).open(setting);
     },
-    updateContainer(checkoutType) {
+    updateContainerName(checkoutType) {
       this.showOpenMenuButton = false;
       switch (checkoutType) {
         case "MAC":
         case "Authenticated": {
-          this.checkoutContainer = {
-            container: {
+          this.container.container = {
               checkoutContainer: "paymentContainer",
-            },
-            onPaymentPaid: () => {
-              this.paymentComplete();
-            },
           };
           break;
         }
         case "standard": {
-          this.checkoutContainer = {
-            container: {
+          this.container.container = {
               checkinContainer: "checkinContainer",
               paymentMenuContainer: "paymentContainer",
-            },
-            onPaymentPaid: () => {
-              this.paymentComplete();
-            },
-            onShippingDetailsAvailable: () => {
-              this.showOpenMenuButton = true;
-            },
-          };
+            }
           break;
         }
       }
