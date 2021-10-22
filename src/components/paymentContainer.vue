@@ -35,17 +35,11 @@ export default {
   },
   data() {
     return {
-      checkoutContainer: {
+      container: {
         container: "paymentContainer",
         onPaymentCompleted: () => {
           this.paymentCompleted();
         }
-      },
-      paymentContainer: {
-        container: "paymentContainer",
-        onPaymentCompleted: () => {
-          this.paymentComplete();
-        },
       },
       showOpenMenuButton: false,
       showCompleteAlert: false
