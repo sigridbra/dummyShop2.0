@@ -6,10 +6,12 @@
       @onScriptAppend="scriptAppended()"
       @onSettingsUpdated="updateContainer($event)"
     />
+    <PxEvents @onEventsUpdated="subscribedEvents = $event"/>
     <paymentContainer
       :instrument="instrument"
       :isOpen="isOpen"
       :setting="setting"
+      :eventOptions="subscribedEvents"
     />
   </div>
 </template>
@@ -17,6 +19,7 @@
 <script>
 import paymentContainer from "./paymentContainer.vue";
 import ScriptInputs from "./scriptInputs.vue";
+import PxEvents from "./options/pxEvents.vue";
 
 export default {
   name: "TheBody",
@@ -25,11 +28,13 @@ export default {
       instrument: "",
       isOpen: false,
       setting: "",
+      subscribedEvents: {}
     };
   },
   components: {
     ScriptInputs,
     paymentContainer,
+    PxEvents,
   },
   methods: {
     scriptAppended() {
@@ -37,7 +42,7 @@ export default {
     },
     updateContainer(setting) {
       this.setting = setting;
-    },
+    }
   },
 };
 </script>
