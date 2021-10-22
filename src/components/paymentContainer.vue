@@ -84,12 +84,45 @@ export default {
     updateEvent(event) {
       let eventName = Object.getOwnPropertyNames(event);
       let eventEnabled = event[eventName];
-      console.log(eventEnabled);
+    //Events
+    onPaymentCompleted() {
+      window.alert("Triggered event " + "onPaymentCompleted");
     },
-    // events
-    paymentComplete() {
-      this.closePayment();
-      this.showCompleteAlert = true;
+    onPaymentPaid() {
+      window.alert("Triggered event " + "onPaymentPaid");
+    },
+    onEventNotification() {
+      window.alert("Triggered event " + "onEventNotification");
+    },
+    onInstrumentSelected() {
+      window.alert("Triggered event " + "onInstrumentSelected");
+    },
+    onExternalRedirect() {
+      window.alert("Triggered event " + "onExternalRedirect");
+    },
+    onError() {
+      window.alert("Triggered event " + "onError");
+    },
+    onTermsOfServiceRequested() {
+      window.alert("Triggered event " + "onTermsOfServiceRequested");
+    },
+    onOutOfViewRedirect() {
+      window.alert("Triggered event " + "onOutOfViewRedirect");
+    },
+    OnApllicationConfigured() {
+      window.alert("Triggered event " + "OnApllicationConfigured");
+    },
+    onPaymentAborted() {
+      window.alert("Triggered event " + "onPaymentAborted");
+    },
+    onPaymentFailed() {
+      window.alert("Triggered event " + "onPaymentFailed");
+    },
+    ExternalOpen() {
+      window.alert("Triggered event " + "ExternalOpen");
+    },
+    onOutOfViewOpen() {
+      window.alert("Triggered event " + "onOutOfViewOpen");
     },
   },
 };
