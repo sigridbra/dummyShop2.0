@@ -13,18 +13,18 @@
       type="radio"
       id="standard"
       name="checkoutSolution"
-      value="standard"
+      value="Authenticated"
       @input="chooseSettings"
     />
-    Checkout Managed Payer
+    Authenticated
     <input
       type="radio"
       id="standard"
       name="checkoutSolution"
-      value="Authenticated"
+      value="standard"
       @input="chooseSettings"
     />
-    Authenticated checkout
+    Standard
   </div>
 </template>
 
